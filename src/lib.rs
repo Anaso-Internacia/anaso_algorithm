@@ -7,9 +7,9 @@
 /// Data used for scoring. Pass into [`score_post`].
 pub struct ScoringData {
     /// Unix timestamp in seconds that the post was submitted.
-    time_posted: i64,
+    pub time_posted: i64,
     /// Number of likes the post has received in total.
-    likes: i64,
+    pub likes: i64,
 }
 
 /// The static score value to be associated with a post.
