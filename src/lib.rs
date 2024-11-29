@@ -48,8 +48,15 @@ pub struct ScoringData {
 /// SELECT * FROM post ORDER BY score LIMIT=20;
 /// ```
 pub fn score_post(data: ScoringData) -> i64 {
-    let score = (data.likes as f64).log10() as i64;
-    data.time_posted / 43200 + score
+    const TWELVE_HOURS: i64 = 43200;
+
+    // Number we pass into log must be at least one.
+    let likes_normalized = (data.likes + 1).max(1);
+
+    // Likes get a diminishing return
+    let likes_logged = (likes_normalized as f64).log10() as i64;
+
+    data.time_posted / TWELVE_HOURS + likes_logged
 }
 
 #[cfg(test)]
